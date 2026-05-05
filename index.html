@@ -512,7 +512,7 @@ const CONFIG = {
 </script>
 
 <script type="module">
-import sdk from 'https://esm.sh/@farcaster/frame-sdk@0.0.30';
+import sdk from 'https://esm.sh/@farcaster/frame-sdk';
 
 /* ── helpers ── */
 const $  = id => document.getElementById(id);
@@ -636,7 +636,12 @@ window.handleClaim = async function() {
 
     const txHash = await sdk.wallet.ethProvider.request({
       method: 'eth_sendTransaction',
-      params: [{ to: CONFIG.TREASURY, value: hex, chainId: CONFIG.CHAIN_ID }]
+      params: [{
+        to: CONFIG.TREASURY,
+        value: hex,
+        gas: '0x5208',
+        data: '0x'
+      }]
     });
 
     localStorage.setItem('farnova_claimed_' + fid, txHash);
